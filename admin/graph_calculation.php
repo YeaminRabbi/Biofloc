@@ -1,11 +1,13 @@
 <?php
 	require_once 'db_config.php';
 
-	
+	//for graph pages
 	$data_reading =fetch_data_pdo_from_table($pdo);
 
+	//for all sensor readings
 	$all_data_reading = fetch_all_data_pdo_from_table($pdo);
 
+	//for emails in the mailing process
 	$all_emails_from_system = fetch_all_data_pdo_from_email_table($pdo);
 	  
 
@@ -31,7 +33,7 @@
 	  {
 
 	  	//GROUP BY hour(Realtime)
-	    $sql="Select * FROM water_quality_monitoring_system ORDER BY id DESC limit 20;";
+	    $sql="Select * FROM water_quality_monitoring_system ORDER BY id DESC limit 10;";
 	    $statement = $pdo->prepare($sql);
 	    $statement->execute();
 	    $row = $statement->fetchAll();
