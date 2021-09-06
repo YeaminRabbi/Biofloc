@@ -34,8 +34,8 @@
   <!-- ########## START: MAIN PANEL ########## -->
   <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
-      <a class="breadcrumb-item" href="index.php">InsightBD</a>
-      <span class="breadcrumb-item active">Dashboard</span>
+      <a class="breadcrumb-item" href="index.php">Biofloc</a>
+      <span class="breadcrumb-item active">Graphs</span>
     </nav>
 
 

@@ -20,7 +20,7 @@
         <a href="index.php" class="sl-menu-link">
           <div class="sl-menu-item">
             <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
-            <span class="menu-item-label">Dashboard</span>
+            <span class="menu-item-label">Graphs</span>
           </div>
         </a>
 
@@ -31,12 +31,12 @@
           </div>
         </a>
 
-         <a href="emails.php" class="sl-menu-link active">
+       <!--   <a href="emails.php" class="sl-menu-link active">
           <div class="sl-menu-item">
             <i class="fa fa-envelope" aria-hidden="true"></i>
-            <span class="menu-item-label">Emails</span>
+            <span class="menu-item-label">Contacts</span>
           </div>
-        </a>
+        </a> -->
 
        </div><!-- sl-sideleft-menu -->
 

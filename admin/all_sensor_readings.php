@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="refresh" content="300"> 
+    <meta http-equiv="refresh" content="1800"> 
     <title>Biofloc Dashboard</title>
     
     <!--Fabicon Image-->
@@ -27,10 +27,15 @@
     <!-- Starlight CSS -->
     <link rel="stylesheet" href="css/starlight.css">
 
+    <script>
+     function autoClick(){
+     document.getElementById('linkToClick').click();
+     }
+     </script>
 
   </head>
 
-<body>
+<body onload="setTimeout('autoClick();');">
 
 <!-- ########## START: LEFT PANEL ########## -->
 
@@ -42,7 +47,237 @@
 
 ?>
 
+<!-- Randomm data insert for testing -->
+<?php 
 
+    require_once 'db_config.php';
+     
+    $pH = rand(4.5,9.0);
+    $TDS= rand(950.70,1700.60); 
+    $TSS =rand(975.90,1660.00);
+    $Temp =rand(26.9,35.9); 
+
+
+    $query = "INSERT INTO water_quality_monitoring_system (pH, TDS, TSS, Temp ) VALUES ('$pH', '$TDS', '$TSS', '$Temp' )";
+    $result = mysqli_query($db,$query);
+
+?>
+
+
+<!-------------------------------- code for sms or email ------------------------------------>
+
+<!-- This code is for mailing -->
+<?php
+
+  
+  // $last_data = fetch_data_from_table_latest($db);
+  // $all_emails=fetch_data_from_table_emails($pdo);
+
+  // $EMAILS=array();
+  // $NAMES=array();
+  // foreach ($all_emails as $key => $data) {
+      
+  //    array_push($EMAILS,$data['email']);    
+  //    array_push($NAMES,$data['name']);    
+
+  // }
+
+
+  // $ph=$last_data['pH'];
+  // $tds=$last_data['TDS'];
+  // $tss=$last_data['TSS'];
+  // $temp=$last_data['Temp'];
+  // $time = $last_data['Realtime'];
+
+  
+  // $trigger_ph=0;
+  // $trigger_tds=0;
+  // $trigger_tss=0;
+  // $trigger_temp=0;
+
+  // if($ph>=6.8 && $ph<=8.0)
+  // {
+  //   $trigger_ph=1;
+  // }
+  // if($tds<=1500.00)
+  // {
+  //   $trigger_tds=1;
+  // }
+  // if($tss>=1000.00 && $tss<=1500.00)
+  // {
+  //   $trigger_tss=1;
+  // }
+  // if($temp>=28.0 && $temp<=30.0)
+  // {
+  //   $trigger_temp=1;
+  // }
+
+
+  
+  // if($trigger_ph!=1 || $trigger_tss!=1 || $trigger_tds!=1 || $trigger_temp!=1)
+  // {
+
+  //   for ($i=0; $i < count($EMAILS) ; $i++) { 
+        
+  //       MAILING($temp,$tds,$tss,$ph,$EMAILS[$i],$time,$NAMES[$i],$trigger_ph,$trigger_tss,$trigger_tds,$trigger_temp);
+
+  //     }
+
+     
+  // }
+
+  // function MAILING($temp,$tds,$tss,$ph,$mail_to,$time,$name,$trigger_ph,$trigger_tss,$trigger_tds,$trigger_temp)
+  // {
+
+  //   $formating_time=date("d M, Y | H:ia",strtotime($time));
+  //   $sub = "Biofloc Notification";
+  //   $msg_start="Hello! ".$name.", your Biofloc system has an unsual reading at ".$formating_time.". Please check your System:\n";
+
+  //   $msg_ph="";
+  //   $msg_temp="";
+  //   $msg_tss="";
+  //   $msg_tds="";
+
+  //       if($trigger_ph!=1)
+  //       {
+  //         $msg_ph="ph reading: ".$ph." units\n";
+  //       }
+  //       if($trigger_tss!=1)
+  //       {
+  //          $msg_tss="tss reading: ".$tss." units\n";
+  //       }
+  //       if($trigger_tds!=1)
+  //       {
+  //          $msg_tds="tds reading: ".$tds." units\n";
+  //       }
+  //       if($trigger_temp!=1)
+  //       {
+  //         $msg_temp="temp reading: ".$temp." units\n";
+  //       }
+        
+  //   $main_msg=$msg_start.$msg_ph.$msg_temp.$msg_tss.$msg_tds;
+   
+  //   $rec = $mail_to;
+
+   
+  //   mail($rec,$sub,$main_msg);
+
+  // }
+
+  function fetch_data_from_table_latest($db)
+      {
+        $sql="Select * FROM water_quality_monitoring_system ORDER BY id DESC limit 1;";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        mysqli_free_result($result);
+
+        return $row;
+        
+      }
+
+
+  function fetch_data_from_table_emails($pdo)
+      {
+        $sql="Select * FROM emails";
+        $statement = $pdo->prepare($sql);
+        $statement->execute();
+        $row = $statement->fetchAll();
+      
+        return $row;
+        
+      }
+
+
+?>
+
+<!-- This code is for SMS -->
+
+<?php 
+  
+  $last_data = fetch_data_from_table_latest($db);
+  $all_emails=fetch_data_from_table_emails($pdo);
+
+  $EMAILS=array();
+  $NAMES=array();
+  $CONTACTS=array();
+  foreach ($all_emails as $key => $data) {
+      
+     array_push($EMAILS,$data['email']);    
+     array_push($NAMES,$data['name']);    
+     array_push($NAMES,$data['contact']);    
+
+  }
+
+
+  $ph=$last_data['pH'];
+  $tds=$last_data['TDS'];
+  $tss=$last_data['TSS'];
+  $temp=$last_data['Temp'];
+  $time = $last_data['Realtime'];
+
+  
+  $trigger_ph=0;
+  $trigger_tds=0;
+  $trigger_tss=0;
+  $trigger_temp=0;
+
+  if($ph>=6.8 && $ph<=8.0)
+  {
+    $trigger_ph=1;
+  }
+  if($tds<=1500.00)
+  {
+    $trigger_tds=1;
+  }
+  if($tss>=1000.00 && $tss<=1500.00)
+  {
+    $trigger_tss=1;
+  }
+  if($temp>=28.0 && $temp<=30.0)
+  {
+    $trigger_temp=1;
+  }
+
+  $main_msg="Hello! your Biofloc system is working correctly";
+  
+  if($trigger_ph!=1 || $trigger_tss!=1 || $trigger_tds!=1 || $trigger_temp!=1)
+  {
+
+   
+          
+          $formating_time=date("d M, Y | H:ia",strtotime($time));
+          
+          $msg_start="Hello!, your Biofloc system has an unsual reading at ".$formating_time.". Please check your System: \n";
+
+          $msg_ph="";
+          $msg_temp="";
+          $msg_tss="";
+          $msg_tds="";
+
+              if($trigger_ph!=1)
+              {
+                $msg_ph=" ph reading: ".$ph." units\n";
+              }
+              if($trigger_tss!=1)
+              {
+                 $msg_tss=" tss reading: ".$tss." units\n";
+              }
+              if($trigger_tds!=1)
+              {
+                 $msg_tds=" tds reading: ".$tds." units\n";
+              }
+              if($trigger_temp!=1)
+              {
+                $msg_temp=" temp reading: ".$temp." units\n";
+              }
+              
+          $main_msg=$msg_start.$msg_ph.$msg_temp.$msg_tss.$msg_tds;
+     
+  }
+  ?> 
+
+
+<a id="linkToClick" href="sms.php?msg=<?= $main_msg ?>" target="_blank"></a>
 
 <div class="sl-logo"><a href="index.php"><i class="icon ion-android-star-outline"></i> Biofloc</a></div>
     
@@ -52,8 +287,8 @@
       <div class="sl-sideleft-menu">
         <a href="index.php" class="sl-menu-link">
           <div class="sl-menu-item">
-            <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
-            <span class="menu-item-label">Dashboard</span>
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+            <span class="menu-item-label">Graphs</span>
           </div>
         </a>
 
@@ -64,12 +299,12 @@
           </div>
         </a>
 
-         <a href="emails.php" class="sl-menu-link">
+        <!--  <a href="emails.php" class="sl-menu-link">
           <div class="sl-menu-item">
             <i class="fa fa-envelope" aria-hidden="true"></i>
             <span class="menu-item-label">Emails</span>
           </div>
-        </a>
+        </a> -->
 
        </div><!-- sl-sideleft-menu -->
 
@@ -87,51 +322,69 @@
   <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
       <a class="breadcrumb-item" href="index.php">Biofloc</a>
-      <span class="breadcrumb-item active">Dashboard</span>
+      <span class="breadcrumb-item active">Data Readings</span>
     </nav>
 
     <div class="sl-pagebody"><!-- MAIN CONTENT -->
+        <div class="card pd-20 pd-sm-40">
+          <h6 class="card-body-title">Data Readings</h6>
+          
         
-
-    	<div class="card pd-20 pd-sm-40">
-          <h6 class="card-body-title">Reading from the Database</h6>
-
-          <p class="mg-b-20 mg-sm-b-30">View search all the datas available here.</p>
-          <table id="myTable" class="table-striped table-bordered">
-			  <thead>
-                <tr>
-                  <th class="text-center">Sl</th>
+         
+          <div class="table-wrapper">
+            <table id="myTable" class="table display responsive nowrap">
+              <thead>
+                <tr >
+                  <th class="text-center">SL</th>
                   <th class="text-center">pH</th>
                   <th class="text-center">TDS</th>
                   <th class="text-center">TSS</th>
-                  <th class="text-center">Temp</th>
+                  <th class="text-center">Temp </th>
                   <th class="text-center">Realtime</th>
+                  
                 </tr>
               </thead>
               <tbody>
-	                <?php 
+                
+                    <?php 
 
-	                	foreach ($all_data_reading as $key => $data) {
-	                ?>
+                      foreach ($all_data_reading as $key => $data) {
+                    ?>
 
-	                <tr class="text-center">
-	                  <td><?= $key+1 ?></td>
-	                  <td><?= $data['pH'] ?></td>
-	                  <td><?= $data['TDS'] ?></td>
-	                  <td><?= $data['TSS'] ?></td>
-	                  <td><?= $data['Temp'] ?></td>
-	                  <td><?= $data['Realtime'] ?></td>
-	                </tr>
-	                
-	                <?php 
-	                	}
+                    <tr class="text-center">
+                      <td style="width: 10px;"><?= $key+1 ?></td>
+                     
+                      <td style="width: 10px;"><?= $data['pH'] ?></td>
+                      <td style="width: 10px;"><?= $data['TDS'] ?></td>
+                      <td style="width: 10px;"><?= $data['TSS'] ?></td>
+                      <td style="width: 10px;"><?= $data['Temp'] ?></td>
+                      <td style="width: 10px;">
 
-	                ?>
-            	</tbody>
-			</table>
-        </div>
+                        <?php
+                          $date = date("d M, Y - h:i a", strtotime($data['Realtime']));
+                          
+
+                          echo $date;
+                        ?>
+                        
+                      </td>
 
 
+                    </tr>
+                    
+                    <?php 
+                      }
+
+                    ?>
+               
+                
+               
+              </tbody>
+            </table>
+          </div><!-- table-wrapper -->
+        </div>    
+
+    
     </div><!-- sl-pagebody --><!-- END MAIN CONTENT -->
 
 
@@ -149,8 +402,9 @@
 	});
   </script>
 
-
+  
   </body>
 
 </html>
+
 
