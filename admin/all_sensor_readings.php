@@ -50,16 +50,16 @@
 <!-- Randomm data insert for testing -->
 <?php 
 
-    require_once 'db_config.php';
+    // require_once 'db_config.php';
      
-    $pH = rand(4.5,9.0);
-    $TDS= rand(950.70,1700.60); 
-    $TSS =rand(975.90,1660.00);
-    $Temp =rand(26.9,35.9); 
+    // $pH = rand(4.5,9.0);
+    // $TDS= rand(950.70,1700.60); 
+    // $TSS =rand(975.90,1660.00);
+    // $Temp =rand(26.9,35.9); 
 
 
-    $query = "INSERT INTO water_quality_monitoring_system (pH, TDS, TSS, Temp ) VALUES ('$pH', '$TDS', '$TSS', '$Temp' )";
-    $result = mysqli_query($db,$query);
+    // $query = "INSERT INTO water_quality_monitoring_system (pH, TDS, TSS, Temp ) VALUES ('$pH', '$TDS', '$TSS', '$Temp' )";
+    // $result = mysqli_query($db,$query);
 
 ?>
 
@@ -221,19 +221,49 @@
   $trigger_tss=0;
   $trigger_temp=0;
 
-  if($ph>=6.8 && $ph<=8.0)
+  //dynamic range for different fish 
+
+
+  $finding_active_fish_status = fetch_all_data_usingDB($db,"select * from sensor_range_on_fish where active = 1");
+
+  $ph_high = $finding_active_fish_status['ph_high'];
+  $ph_low = $finding_active_fish_status['ph_low'];
+  
+  $tss_range = $finding_active_fish_status['tss'];
+  
+  $tds_high = $finding_active_fish_status['tds_high'];
+  $tds_low = $finding_active_fish_status['tds_low'];
+  
+  $temp_low = $finding_active_fish_status['temp_low'];
+  $temp_high = $finding_active_fish_status['temp_high'];
+
+
+  
+  function fetch_all_data_usingDB($db,$sql){
+      
+      $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        mysqli_free_result($result);
+        return $row;
+    }
+
+
+
+
+//dynamic changes in the ranges
+  if($ph>=$ph_low && $ph<=$ph_high)
   {
     $trigger_ph=1;
   }
-  if($tds<=1500.00)
+  if($tds>=$tds_low && $tds<=$tds_high)
   {
     $trigger_tds=1;
   }
-  if($tss>=1000.00 && $tss<=1500.00)
+  if($tss<=$tss_range)
   {
     $trigger_tss=1;
   }
-  if($temp>=28.0 && $temp<=30.0)
+  if($temp>=$temp_low && $temp<=$temp_high)
   {
     $trigger_temp=1;
   }
@@ -299,12 +329,19 @@
           </div>
         </a>
 
-        <!--  <a href="emails.php" class="sl-menu-link">
+       <a href="userinformation.php" class="sl-menu-link">
           <div class="sl-menu-item">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
-            <span class="menu-item-label">Emails</span>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span class="menu-item-label">User Information</span>
           </div>
-        </a> -->
+        </a>
+        
+         <a href="sensor_range.php" class="sl-menu-link">
+          <div class="sl-menu-item">
+           <i class="fa fa-exchange" aria-hidden="true"></i>
+            <span class="menu-item-label">Sensor Range</span>
+          </div>
+        </a>
 
        </div><!-- sl-sideleft-menu -->
 

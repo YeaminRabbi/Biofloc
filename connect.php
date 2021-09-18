@@ -35,35 +35,5 @@ echo "Insertion Success!<br>";
 
 
 
-
-
-
-
-<!-- This code is for SMS  -->
-<?php 
-	
-	if($pH>=6.8 && $pH<=8.0)
-	{
-	  header("Location: sms.php?sensor=ph&val=$pH");
-	}
-	if($TDS<=1500.00)
-	{
-	  header("Location: sms.php?sensor=tds&val=$TDS");
-	}
-	if($TSS>=1000.00 && $TSS<=1500.00)
-	{
-		
-	  header("Location: sms.php?sensor=tss&val=$TSS");
-
-	}
-	if($Temp>=28.0 && $Temp<=30.0)
-	{
-	  header("Location: sms.php?sensor=temp&val=$Temp");
-
-	}
-
-?>
-
-
 </body>
 </html>

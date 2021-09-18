@@ -19,13 +19,19 @@
           </div>
         </a>
 
-       <!--  <a href="emails.php" class="sl-menu-link">
+        <a href="userinformation.php" class="sl-menu-link">
           <div class="sl-menu-item">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
-            <span class="menu-item-label">Contacts</span>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span class="menu-item-label">User Information</span>
           </div>
         </a>
-         -->
+        
+         <a href="sensor_range.php" class="sl-menu-link">
+          <div class="sl-menu-item">
+          <i class="fa fa-exchange" aria-hidden="true"></i>
+            <span class="menu-item-label">Sensor Range</span>
+          </div>
+        </a>
         
       
 

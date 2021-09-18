@@ -16,16 +16,16 @@
 
 <?php 
 
-    require_once 'db_config.php';
+    // require_once 'db_config.php';
      
-    $pH = rand(4.5,9.0);
-    $TDS= rand(950.70,1700.60); 
-    $TSS =rand(975.90,1660.00);
-    $Temp =rand(26.9,35.9); 
+    // $pH = rand(4.5,9.0);
+    // $TDS= rand(950.70,1700.60); 
+    // $TSS =rand(975.90,1660.00);
+    // $Temp =rand(26.9,35.9); 
 
 
-    $query = "INSERT INTO water_quality_monitoring_system (pH, TDS, TSS, Temp ) VALUES ('$pH', '$TDS', '$TSS', '$Temp' )";
-    $result = mysqli_query($db,$query);
+    // $query = "INSERT INTO water_quality_monitoring_system (pH, TDS, TSS, Temp ) VALUES ('$pH', '$TDS', '$TSS', '$Temp' )";
+    // $result = mysqli_query($db,$query);
 
 ?>
 
