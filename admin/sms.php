@@ -27,7 +27,7 @@
 
 	    $contact = $user_data['contact'];
 
-	 header("Location: https://tpsms.xyz/sms/api?action=send-sms&api_key=c2hpZmF0MTA1Mjc3OnNoaWZhdDEwNTI3Nw==&to=$contact&from=8804445616285&sms=$msg");
+	// header("Location: https://tpsms.xyz/sms/api?action=send-sms&api_key=c2hpZmF0MTA1Mjc3OnNoaWZhdDEwNTI3Nw==&to=$contact&from=8804445616285&sms=$msg");
 
 
 ?>

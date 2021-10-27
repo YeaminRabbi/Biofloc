@@ -77,7 +77,7 @@
 
     <div class="sl-pagebody"><!-- MAIN CONTENT -->
       
-<a href="PDF.php" target="_blank" class="btn btn-warning">Data Reading in PDF</a>
+
       <div class="row row-sm mg-t-20">
           
           <div class="col-xl-6">

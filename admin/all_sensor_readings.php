@@ -363,6 +363,11 @@
     </nav>
 
     <div class="sl-pagebody"><!-- MAIN CONTENT -->
+
+
+      <a href="PDF.php" target="_blank" class="btn btn-warning mb-2">Data Reading in PDF</a>
+
+
         <div class="card pd-20 pd-sm-40">
           <h6 class="card-body-title">Data Readings</h6>
           
@@ -388,7 +393,7 @@
                       foreach ($all_data_reading as $key => $data) {
                     ?>
 
-                    <tr class="text-center">
+                    <tr class="text-center" style="font-weight: 700;">
                       <td style="width: 10px;"><?= $key+1 ?></td>
                      
                       <td style="width: 10px;"><?= $data['pH'] ?></td>
